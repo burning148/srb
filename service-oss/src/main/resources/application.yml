@@ -10,8 +10,8 @@ spring:
 aliyun:
   oss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    keyId: LTAI5t9sv58vsAdhwMiZxNYG
-    keySecret: Bcnl8z9HTM5QtX9SRcvgrukbQULoBG
+    keyId: 你的阿里云id
+    keySecret: 你的阿里云密码
     bucketName: srb444
 
 
