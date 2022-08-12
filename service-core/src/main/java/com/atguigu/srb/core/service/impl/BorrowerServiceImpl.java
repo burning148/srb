@@ -3,20 +3,20 @@ package com.atguigu.srb.core.service.impl;
 import com.atguigu.srb.core.enums.BorrowerStatusEnum;
 import com.atguigu.srb.core.enums.IntegralEnum;
 import com.atguigu.srb.core.mapper.BorrowerAttachMapper;
+import com.atguigu.srb.core.mapper.BorrowerMapper;
 import com.atguigu.srb.core.mapper.UserInfoMapper;
 import com.atguigu.srb.core.mapper.UserIntegralMapper;
 import com.atguigu.srb.core.pojo.entity.Borrower;
-import com.atguigu.srb.core.mapper.BorrowerMapper;
 import com.atguigu.srb.core.pojo.entity.BorrowerAttach;
 import com.atguigu.srb.core.pojo.entity.UserInfo;
 import com.atguigu.srb.core.pojo.entity.UserIntegral;
 import com.atguigu.srb.core.pojo.vo.BorrowerApprovalVO;
 import com.atguigu.srb.core.pojo.vo.BorrowerAttachVO;
 import com.atguigu.srb.core.pojo.vo.BorrowerDetailVO;
+import com.atguigu.srb.core.pojo.vo.BorrowerVO;
 import com.atguigu.srb.core.service.BorrowerAttachService;
 import com.atguigu.srb.core.service.BorrowerService;
 import com.atguigu.srb.core.service.DictService;
-import com.atguigu.srb.core.pojo.vo.BorrowerVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -174,11 +174,11 @@ public class BorrowerServiceImpl extends ServiceImpl<BorrowerMapper, Borrower> i
 
         int curIntegral = userInfo.getIntegral() + borrowerApprovalVO.getInfoIntegral();
         if (borrowerApprovalVO.getIsIdCardOk()) {
-            curIntegral += IntegralEnum.BORROWER_IDCARD.getIntegral();
+            curIntegral += IntegralEnum.BORROWER_ID_CARD.getIntegral();
             userIntegral = new UserIntegral();
             userIntegral.setUserId(userId);
-            userIntegral.setIntegral(IntegralEnum.BORROWER_IDCARD.getIntegral());
-            userIntegral.setContent(IntegralEnum.BORROWER_IDCARD.getMsg());
+            userIntegral.setIntegral(IntegralEnum.BORROWER_ID_CARD.getIntegral());
+            userIntegral.setContent(IntegralEnum.BORROWER_ID_CARD.getMsg());
             userIntegralMapper.insert(userIntegral);
         }
 

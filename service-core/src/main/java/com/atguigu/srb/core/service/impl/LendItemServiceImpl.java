@@ -105,8 +105,8 @@ public class LendItemServiceImpl extends ServiceImpl<LendItemMapper, LendItem> i
 
         //实际收益
         lendItem.setRealAmount(new BigDecimal(0));
-
-        lendItem.setStatus(0);//默认状态：刚刚创建
+        //默认状态：刚刚创建
+        lendItem.setStatus(0);
         baseMapper.insert(lendItem);
 
         //组装投资相关的参数，提交到汇付宝资金托管平台==========================================
@@ -121,25 +121,28 @@ public class LendItemServiceImpl extends ServiceImpl<LendItemMapper, LendItem> i
         paramMap.put("agentId", HfbConst.AGENT_ID);
         paramMap.put("voteBindCode", bindCode);
         paramMap.put("benefitBindCode",benefitBindCode);
-        paramMap.put("agentProjectCode", lend.getLendNo());//项目标号
+        //项目标号
+        paramMap.put("agentProjectCode", lend.getLendNo());
         paramMap.put("agentProjectName", lend.getTitle());
 
         //在资金托管平台上的投资订单的唯一编号，要和lendItemNo保持一致。
-        paramMap.put("agentBillNo", lendItemNo);//订单编号
+        //订单编号
+        paramMap.put("agentBillNo", lendItemNo);
         paramMap.put("voteAmt", investVO.getInvestAmount());
         paramMap.put("votePrizeAmt", "0");
         paramMap.put("voteFeeAmt", "0");
-        paramMap.put("projectAmt", lend.getAmount()); //标的总金额
+        //标的总金额
+        paramMap.put("projectAmt", lend.getAmount());
         paramMap.put("note", "");
-        paramMap.put("notifyUrl", HfbConst.INVEST_NOTIFY_URL); //检查常量是否正确
+        //检查常量是否正确
+        paramMap.put("notifyUrl", HfbConst.INVEST_NOTIFY_URL);
         paramMap.put("returnUrl", HfbConst.INVEST_RETURN_URL);
         paramMap.put("timestamp", RequestHelper.getTimestamp());
         String sign = RequestHelper.getSign(paramMap);
         paramMap.put("sign", sign);
 
         //构建充值自动提交表单
-        String formStr = FormHelper.buildForm(HfbConst.INVEST_URL, paramMap);
-        return formStr;
+        return FormHelper.buildForm(HfbConst.INVEST_URL, paramMap);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -166,7 +169,7 @@ public class LendItemServiceImpl extends ServiceImpl<LendItemMapper, LendItem> i
 
         //修改投资记录的投资状态改为已支付
         LendItem lendItem = this.getByLendItemNo(agentBillNo);
-        lendItem.setStatus(1);//已支付
+        lendItem.setStatus(1);
         baseMapper.updateById(lendItem);
 
         //修改标的信息：投资人数、已投金额

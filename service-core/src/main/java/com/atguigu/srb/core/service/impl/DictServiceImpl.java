@@ -2,9 +2,9 @@ package com.atguigu.srb.core.service.impl;
 
 import com.alibaba.excel.EasyExcel;
 import com.atguigu.srb.core.listener.ExcelDictDtoListener;
+import com.atguigu.srb.core.mapper.DictMapper;
 import com.atguigu.srb.core.pojo.dto.ExcelDictDto;
 import com.atguigu.srb.core.pojo.entity.Dict;
-import com.atguigu.srb.core.mapper.DictMapper;
 import com.atguigu.srb.core.service.DictService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, List<Dict>> redisTemplate;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -63,7 +63,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         //查询redis中是否存在数据列表
         List<Dict> dictList = null;
         try {
-            dictList = (List<Dict>) redisTemplate.opsForValue().get("sre:core:dictList:"+ parentId);
+            dictList = redisTemplate.opsForValue().get("sre:core:dictList:" + parentId);
             if (dictList != null) {
                 //存在则直接返回数据列表
                 log.info("从redis中取值");
@@ -131,10 +131,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     private Boolean hasChlidren(Long id) {
         Integer result = baseMapper.selectCount(new QueryWrapper<Dict>().eq("parent_id", id));
 
-        if (result > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return result > 0;
     }
 }

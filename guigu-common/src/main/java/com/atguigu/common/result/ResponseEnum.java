@@ -1,7 +1,6 @@
 package com.atguigu.common.result;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -20,7 +19,7 @@ public enum ResponseEnum {
 
     //-1xx 服务器错误
     BAD_SQL_GRAMMAR_ERROR(-101, "sql语法错误"),
-    SERVLET_ERROR(-102, "servlet请求异常"), //-2xx 参数校验
+    SERVLET_ERROR(-102, "servlet请求异常"),
     UPLOAD_ERROR(-103, "文件上传错误"),
     EXPORT_DATA_ERROR(104, "数据导出失败"),
 
@@ -49,14 +48,18 @@ public enum ResponseEnum {
 
     PAY_UNIFIEDORDER_ERROR(401, "统一下单错误"),
 
-    ALIYUN_SMS_LIMIT_CONTROL_ERROR(-502, "短信发送过于频繁"),//业务限流
-    ALIYUN_SMS_ERROR(-503, "短信发送失败"),//其他失败
+    //业务限流
+    ALIYUN_SMS_LIMIT_CONTROL_ERROR(-502, "短信发送过于频繁"),
+    ALIYUN_SMS_ERROR(-503, "短信发送失败"),
 
+    //其他失败
     WEIXIN_CALLBACK_PARAM_ERROR(-601, "回调参数不正确"),
     WEIXIN_FETCH_ACCESSTOKEN_ERROR(-602, "获取access_token失败"),
     WEIXIN_FETCH_USERINFO_ERROR(-603, "获取用户信息失败"),
     ;
-    private Integer code;//状态码
-    private String message;//消息
+    //状态码
+    private final Integer code;
+    //消息
+    private final String message;
 
 }

@@ -78,8 +78,7 @@ public class JwtUtils {
         }
         try {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(getKeyInstance()).parseClaimsJws(token);
-            Claims claims = claimsJws.getBody();
-            return claims;
+            return claimsJws.getBody();
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.LOGIN_AUTH_ERROR);
         }
