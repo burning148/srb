@@ -1,4 +1,4 @@
-# 尚融宝金融项目
+# 尚融宝后端管理平台
 ## 所用到的技术
 SpringBoot + SpringCloud + Redis + JWT + EasyExcel + RabbitMQ + Swagger
 ## 模块
